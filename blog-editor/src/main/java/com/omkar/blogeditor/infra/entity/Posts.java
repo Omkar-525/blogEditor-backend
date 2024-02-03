@@ -16,20 +16,20 @@ import java.util.Set;
 public class Posts implements Serializable {
 
     @Id
-    @Column(name = "Id")
+    @Column(name = "id")
     private long id;
 
-    @Column(name ="Content")
+    @Column(name ="content")
     private String content;
 
-    @Column(name = "Category")
+    @Column(name = "category")
     private String category;
 
     @ManyToMany
     @JoinTable(
-            name ="Users_Posts",
+            name ="users_posts",
             joinColumns =@JoinColumn(name = "id"),
-            inverseJoinColumns =@JoinColumn(name="U_Id")
+            inverseJoinColumns =@JoinColumn(name="uid")
     )
     private Set<User> users;
 }

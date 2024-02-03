@@ -14,17 +14,20 @@ import java.util.Set;
 @Builder
 public class User implements Serializable {
     @Id
-    @Column(name = "U_Id")
+    @Column(name = "uid")
     private long id;
 
-    @Column(name = "Name")
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "Username")
+    @Column(name = "username")
     private String username;
 
-    @Column(name = "Password")
+    @Column(name = "password")
     private String password;
+
+    @Column(name = "active")
+    private boolean active;
 
     @ManyToMany(mappedBy = "users")
     private Set<Posts> myPost;

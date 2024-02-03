@@ -19,13 +19,13 @@ import java.util.Set;
 public class Profile implements Serializable {
 
     @Id
-    @Column(name = "Pid")
+    @Column(name = "pid")
     private long id;
 
-    @Column(name = "User")
+    @Column(name = "user")
     private Set<User> user;
 
-    @Column(name ="Posts")
+    @Column(name ="posts")
     private Set<Posts> posts;
 
 
