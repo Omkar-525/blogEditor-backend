@@ -26,8 +26,14 @@ public class User implements Serializable {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "email")
+    private String email;
+
     @Column(name = "active")
     private boolean active;
+
+    @Column(name = "role")
+    private String role;
 
     @ManyToMany(mappedBy = "users")
     private Set<Posts> myPost;
