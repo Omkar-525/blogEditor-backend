@@ -1,7 +1,7 @@
 package com.omkar.blogeditor.infra.model;
 
 import com.omkar.blogeditor.infra.entity.User;
-import jakarta.persistence.Column;
+import javax.persistence.Column;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

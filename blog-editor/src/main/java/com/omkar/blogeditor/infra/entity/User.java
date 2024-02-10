@@ -1,6 +1,6 @@
 package com.omkar.blogeditor.infra.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;

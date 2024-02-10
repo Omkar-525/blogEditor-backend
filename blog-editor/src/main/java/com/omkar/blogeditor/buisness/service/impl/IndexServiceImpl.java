@@ -8,7 +8,11 @@ import com.omkar.blogeditor.infra.model.request.RegisterRequest;
 import com.omkar.blogeditor.infra.repository.UserRepository;
 import com.omkar.blogeditor.util.response_builders.BaseFailure;
 import com.omkar.blogeditor.util.response_builders.BaseSuccess;
+import com.omkar.blogeditor.util.response_builders.failure.FailureResponseBuilder;
+import com.omkar.blogeditor.util.response_builders.success.SuccessResponseBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -20,13 +24,22 @@ public class IndexServiceImpl implements IndexService {
     private UserRepository userRepository;
 
     @Autowired
-    private BaseSuccess baseSuccess;
+    private BaseSuccess baseSuccessBuilder;
 
     @Autowired
-    private BaseFailure baseFailure;
+    private BaseFailure baseFailureBuilder;
 
     @Autowired
-    private UserDetailModel userDetailModel;
+    private UserDetailsService userDetailsService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private SuccessResponseBuilder successResponseBuilder;
+
+    @Autowired
+    private FailureResponseBuilder failureResponseBuilder;
 
 
     @Override
@@ -38,16 +51,16 @@ public class IndexServiceImpl implements IndexService {
                     .name(request.getName())
                     .username(request.getUsername())
                     .email(request.getEmail())
-                    .password(request.getPassword())
+                    .password(passwordEncoder.encode(request.getPassword()))
                     .active(true)
                     .role("user")
                     .build();
             //save user
             userRepository.save(user);
 
-            return baseSuccess.baseSuccessResponse("User Created");
+            return baseSuccessBuilder.baseSuccessResponse("User Created");
         } else {
-            return baseFailure.baseFailResponse("User already Exists");
+            return baseFailureBuilder.baseFailResponse("User already Exists");
         }
     }
 }
