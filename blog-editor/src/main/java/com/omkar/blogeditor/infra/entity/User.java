@@ -36,6 +36,6 @@ public class User implements Serializable {
     private String role;
 
     @ManyToMany(mappedBy = "users")
-    private Set<Posts> myPost;
+    private Set<Posts> posts;
 
 }

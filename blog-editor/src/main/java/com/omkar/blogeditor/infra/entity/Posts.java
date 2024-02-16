@@ -4,6 +4,7 @@ import javax.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -32,4 +33,10 @@ public class Posts implements Serializable {
             inverseJoinColumns =@JoinColumn(name="uid")
     )
     private Set<User> users;
+
+    @Column(name = "user")
+    private User user;
+
+    @Column(name = "date")
+    private String date;
 }
