@@ -96,6 +96,7 @@ public class IndexServiceImpl implements IndexService {
     public static Map<String, Object> generateClaims(User user) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("email",user.getEmail());
+        claims.put("username", user.getUsername());
         claims.put("role",user.getRole());
         return claims;
     }

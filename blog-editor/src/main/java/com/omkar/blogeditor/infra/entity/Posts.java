@@ -26,15 +26,11 @@ public class Posts implements Serializable {
     @Column(name = "category")
     private String category;
 
-    @ManyToMany
-    @JoinTable(
-            name ="users_posts",
-            joinColumns =@JoinColumn(name = "id"),
-            inverseJoinColumns =@JoinColumn(name="uid")
+    @ManyToOne
+    @JoinColumn(
+            name = "user_id",
+            nullable = false
     )
-    private Set<User> users;
-
-    @Column(name = "user")
     private User user;
 
     @Column(name = "date")

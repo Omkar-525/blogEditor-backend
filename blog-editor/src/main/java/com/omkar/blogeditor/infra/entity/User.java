@@ -35,7 +35,7 @@ public class User implements Serializable {
     @Column(name = "role")
     private String role;
 
-    @ManyToMany(mappedBy = "users")
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     private Set<Posts> posts;
 
 }

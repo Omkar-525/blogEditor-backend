@@ -6,6 +6,7 @@ import com.omkar.blogeditor.infra.model.BaseResponse;
 import com.omkar.blogeditor.infra.model.PostDTO;
 import com.omkar.blogeditor.infra.model.response.GetPostResponse;
 import com.omkar.blogeditor.infra.model.response.LoginResponse;
+import com.omkar.blogeditor.infra.model.response.ProfileResponse;
 import com.omkar.blogeditor.util.response_builders.BaseSuccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -41,5 +42,17 @@ public class SuccessResponseBuilder {
                 .posts(posts.stream().map(PostDTO:: new).collect(Collectors.toList()))
                 .build();
 
+    }
+
+    public ProfileResponse getUser(User user) {
+        BaseResponse baseResponse = baseSuccess.baseSuccessResponse("User found");
+        return ProfileResponse.builder()
+                .status(baseResponse.getStatus())
+                .responseDescription(baseResponse.getResponseDescription())
+                .responseCode(baseResponse.getResponseCode())
+                .httpStatus(baseResponse.getHttpStatus())
+                .name(user.getName())
+                .email(user.getEmail())
+                .build();
     }
 }

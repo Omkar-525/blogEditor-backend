@@ -15,7 +15,6 @@ import java.util.List;
 
 public class UserFilter extends OncePerRequestFilter {
 
-    @Autowired
     private String SECRET_KEY = "secret";
 
     @Override

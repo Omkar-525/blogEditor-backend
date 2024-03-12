@@ -4,6 +4,7 @@ import com.omkar.blogeditor.buisness.service.PostsService;
 import com.omkar.blogeditor.infra.entity.Posts;
 import com.omkar.blogeditor.infra.entity.User;
 import com.omkar.blogeditor.infra.model.BaseResponse;
+import com.omkar.blogeditor.infra.model.UserDetailModel;
 import com.omkar.blogeditor.infra.model.request.SetPostRequest;
 import com.omkar.blogeditor.infra.model.response.GetPostResponse;
 import com.omkar.blogeditor.infra.repository.PostRepository;
@@ -57,7 +58,7 @@ public class PostsServiceImpl implements PostsService {
     public BaseResponse setPost(String authorizationHeader, SetPostRequest request) {
         String jwt = authorizationHeader.substring(7);
         String email = jwtUtil.extractUsername(jwt);
-        UserDetails userDetails =userDetailsService.loadUserByUsername(email);
+        UserDetailModel userDetails = (UserDetailModel) userDetailsService.loadUserByUsername(email);
 
         if (Boolean.TRUE.equals(jwtUtil.validateToken(jwt, userDetails))){
             try {
@@ -85,7 +86,7 @@ public class PostsServiceImpl implements PostsService {
     public GetPostResponse getPosts(String authorizationHeader) {
         String jwt =authorizationHeader.substring(7);
         String email = jwtUtil.extractUsername(jwt);
-        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+        UserDetailModel userDetails = (UserDetailModel) userDetailsService.loadUserByUsername(email);
 
         if (Boolean.TRUE.equals(jwtUtil.validateToken(jwt, userDetails))){
             try {

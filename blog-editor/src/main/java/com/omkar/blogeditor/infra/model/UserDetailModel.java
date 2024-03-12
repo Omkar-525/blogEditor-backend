@@ -12,10 +12,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
 public class UserDetailModel implements UserDetails {
 
-    private String name;
     private String email;
     private String username;
     private String password;
@@ -27,7 +25,6 @@ public class UserDetailModel implements UserDetails {
     }
 
     public UserDetailModel(User user){
-    this.name=user.getName();
     this.email=user.getEmail();
     this.username=user.getUsername();
     this.password=user.getPassword();
@@ -39,7 +36,6 @@ public class UserDetailModel implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {return authorities;}
 
-    public String getName() {return name;}
 
     public String getEmail() {return email;}
 
@@ -60,4 +56,8 @@ public class UserDetailModel implements UserDetails {
 
     @Override
     public boolean isEnabled() {return active;}
+
+    public boolean isActive() {
+        return active;
+    }
 }
