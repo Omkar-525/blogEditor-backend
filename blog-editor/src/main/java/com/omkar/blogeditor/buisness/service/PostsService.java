@@ -8,4 +8,8 @@ public interface PostsService {
     BaseResponse setPost(String authorizationHeader, SetPostRequest request);
 
     GetPostResponse getPosts(String authorizationHeader);
+
+    GetPostResponse getAllPosts();
+
+    GetPostResponse getPostId(Long postId);
 }

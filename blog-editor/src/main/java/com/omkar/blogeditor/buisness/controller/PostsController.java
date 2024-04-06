@@ -9,20 +9,22 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/user")
+@RequestMapping("/user/post")
 public class PostsController {
 
     @Autowired
     private PostsService postsService;
 
-    @PostMapping("/new-post")
+    @PostMapping
     public BaseResponse setPost(@RequestHeader(value = "Authorization") String authorizationHeader,
                                 @RequestBody SetPostRequest request){
         return postsService.setPost(authorizationHeader, request);
     }
 
-    @GetMapping("/all-posts")
+    @GetMapping
     public GetPostResponse getPosts(@RequestHeader(value = "Authorization") String authorizationHeader) {
         return postsService.getPosts(authorizationHeader);
     }
+
 }
+

@@ -20,7 +20,7 @@ public class UserFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authHeader = request.getHeader("Authorization");
-        String jwt =authHeader.substring(7);
+        String jwt = authHeader.substring(7);
         Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(jwt).getBody();
         List<String> roles = Arrays.asList(claims.get("role", String.class).split(","));
         if ( !roles.contains("user")){

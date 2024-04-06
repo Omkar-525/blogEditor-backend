@@ -17,6 +17,7 @@ import com.omkar.blogeditor.util.response_builders.BaseSuccess;
 import com.omkar.blogeditor.util.response_builders.failure.FailureResponseBuilder;
 import com.omkar.blogeditor.util.response_builders.success.SuccessResponseBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -64,11 +65,11 @@ public class PostsServiceImpl implements PostsService {
             try {
                 Optional<User> user = userRepository.findByEmail(email);
                 if (user.isPresent()) {
-                    AppUtil appUtil1 = new AppUtil();
                     Posts posts = Posts.builder()
                             .category(request.getCategory())
+                            .title(request.getTitle())
                             .content(request.getContent())
-                            .date(appUtil1.getDateMonthYear())
+                            .date(appUtil.getDateMonthYear())
                             .user(user.get())
                             .build();
                     postRepository.save(posts);
@@ -102,4 +103,17 @@ public class PostsServiceImpl implements PostsService {
         }
         return failureResponse.getPosts("Invalid Jwt");
     }
+
+    @Override
+    public GetPostResponse getAllPosts() {
+        List<Posts> allPosts = postRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+        return successResponse.getAllPosts(allPosts);
+    }
+
+    @Override
+    public GetPostResponse getPostId(Long postId) {
+        Optional<Posts> post = postRepository.findById(postId);
+        return successResponse.getPostId(post);
+    }
+
 }

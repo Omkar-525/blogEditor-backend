@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -53,6 +54,28 @@ public class SuccessResponseBuilder {
                 .httpStatus(baseResponse.getHttpStatus())
                 .name(user.getName())
                 .email(user.getEmail())
+                .build();
+    }
+
+    public GetPostResponse getAllPosts(List<Posts> allPosts) {
+        BaseResponse baseResponse = baseSuccess.baseSuccessResponse("Post Success");
+        return GetPostResponse.builder()
+                .status(baseResponse.getStatus())
+                .responseDescription(baseResponse.getResponseDescription())
+                .responseCode(baseResponse.getResponseCode())
+                .httpStatus(baseResponse.getHttpStatus())
+                .posts(allPosts.stream().map(PostDTO:: new).collect(Collectors.toList()))
+                .build();
+    }
+
+    public GetPostResponse getPostId(Optional<Posts> post) {
+        BaseResponse baseResponse = baseSuccess.baseSuccessResponse("Post Success");
+        return GetPostResponse.builder()
+                .status(baseResponse.getStatus())
+                .responseDescription(baseResponse.getResponseDescription())
+                .responseCode(baseResponse.getResponseCode())
+                .httpStatus(baseResponse.getHttpStatus())
+                .posts(post.stream().map(PostDTO:: new).collect(Collectors.toList()))
                 .build();
     }
 }

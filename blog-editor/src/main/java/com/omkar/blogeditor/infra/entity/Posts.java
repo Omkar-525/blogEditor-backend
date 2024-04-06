@@ -1,6 +1,8 @@
 package com.omkar.blogeditor.infra.entity;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import java.io.Serializable;
@@ -17,10 +19,14 @@ import java.util.Set;
 public class Posts implements Serializable {
 
     @Id
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(name ="title")
+    private String title;
+
     @Column(name ="content")
+    @Lob
     private String content;
 
     @Column(name = "category")
@@ -31,6 +37,7 @@ public class Posts implements Serializable {
             name = "user_id",
             nullable = false
     )
+    @JsonIgnore
     private User user;
 
     @Column(name = "date")

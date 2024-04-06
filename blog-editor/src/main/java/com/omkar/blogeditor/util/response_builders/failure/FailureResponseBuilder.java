@@ -5,11 +5,13 @@ import com.omkar.blogeditor.infra.model.response.GetPostResponse;
 import com.omkar.blogeditor.infra.model.response.LoginResponse;
 import com.omkar.blogeditor.infra.model.response.ProfileResponse;
 import com.omkar.blogeditor.util.response_builders.BaseFailure;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class FailureResponseBuilder {
 
+    @Autowired
     private BaseFailure baseFailure;
 
     public LoginResponse loginFailed(String description) {

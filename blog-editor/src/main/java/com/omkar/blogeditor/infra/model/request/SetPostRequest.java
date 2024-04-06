@@ -13,6 +13,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class SetPostRequest extends BaseRequest {
 
+    public String title;
+
     public String content;
 
     public String category;
