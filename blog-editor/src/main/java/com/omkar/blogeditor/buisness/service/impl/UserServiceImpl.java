@@ -2,7 +2,9 @@ package com.omkar.blogeditor.buisness.service.impl;
 
 import com.omkar.blogeditor.buisness.service.UserService;
 import com.omkar.blogeditor.infra.entity.User;
+import com.omkar.blogeditor.infra.model.BaseResponse;
 import com.omkar.blogeditor.infra.model.UserDetailModel;
+import com.omkar.blogeditor.infra.model.request.ChangePasswordRequest;
 import com.omkar.blogeditor.infra.model.response.ProfileResponse;
 import com.omkar.blogeditor.infra.repository.UserRepository;
 import com.omkar.blogeditor.security.jwt.JwtUtil;
@@ -65,6 +67,33 @@ public class UserServiceImpl implements UserService {
             }
         }
         return failureResponse.getUser("Invalid JWT");
+    }
+
+    @Override
+    public BaseResponse changePassword(String authorizationHeader, ChangePasswordRequest request) {
+        String jwt = authorizationHeader.substring(7);
+        String email = jwtUtil.extractUsername(jwt);
+        UserDetailModel userDetails = (UserDetailModel) userDetailsService.loadUserByUsername(email);
+        if (Boolean.TRUE.equals(jwtUtil.validateToken(jwt, userDetails))) {
+            try {
+                Optional<User> user = userRepository.findByEmail(email);
+                if (user.isPresent()) {
+                    if(passwordEncoder.matches(request.getOldPassword(),user.get().getPassword())){
+                        User u = user.get();
+                        u.setPassword(passwordEncoder.encode(request.newPassword));
+                        userRepository.save(u);
+                        return baseSuccess.baseSuccessResponse("Password changed");
+                    }else{
+                        return baseFailure.baseFailResponse("Invalid password");
+                    }
+                }
+                return baseFailure.baseFailResponse("Invalid user");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                return baseFailure.baseFailResponse("something went wrong");
+            }
+        }
+        return baseFailure.baseFailResponse("Invalid JWt");
     }
 
 }

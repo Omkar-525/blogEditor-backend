@@ -116,4 +116,31 @@ public class PostsServiceImpl implements PostsService {
         return successResponse.getPostId(post);
     }
 
+    @Override
+    public BaseResponse deletePost(String authorizationHeader, Long id) {
+        String jwt =authorizationHeader.substring(7);
+        String email = jwtUtil.extractUsername(jwt);
+        UserDetailModel userDetails = (UserDetailModel) userDetailsService.loadUserByUsername(email);
+        if (Boolean.TRUE.equals(jwtUtil.validateToken(jwt, userDetails))) {
+            try {
+                Optional<User> user = userRepository.findByEmail(email);
+                if (user.isPresent()) {
+                    Optional<Posts> posts = postRepository.findByIdAndUser(id, user.get());
+                    if (posts.isPresent()) {
+                        postRepository.delete(posts.get());
+                        return baseSuccess.baseSuccessResponse("post deleted");
+                    } else {
+                        return baseFailure.baseFailResponse("You don't have permission to delete this post");
+                    }
+                } else {
+                    return baseFailure.baseFailResponse("User is not present");
+                }
+            } catch (Exception ex) {
+                return baseFailure.baseFailResponse("Something went wrong");
+
+            }
+        }
+        return baseFailure.baseFailResponse("Invalid JWT");
+    }
+
 }

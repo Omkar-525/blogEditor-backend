@@ -12,4 +12,6 @@ public interface PostsService {
     GetPostResponse getAllPosts();
 
     GetPostResponse getPostId(Long postId);
+
+    BaseResponse deletePost(String authorizationHeader, Long id);
 }

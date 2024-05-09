@@ -25,6 +25,11 @@ public class PostsController {
     public GetPostResponse getPosts(@RequestHeader(value = "Authorization") String authorizationHeader) {
         return postsService.getPosts(authorizationHeader);
     }
+    @DeleteMapping("/{id}")
+    public BaseResponse deletePost(@RequestHeader(value = "Authorization") String authorizationHeader,
+                                          @PathVariable("id") Long id){
+        return postsService.deletePost(authorizationHeader,id);
+    }
 
 }
 
